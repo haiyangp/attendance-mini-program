@@ -1,0 +1,97 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">{{course.cou_name}} 签到</h2>
+</view>
+
+<view class="weui-btn-area" wx:if="{{!haveChosenRoomType}}">
+    <picker bindchange="bindPickerChange" value="{{roomtype}}" range="{{array}}">
+        <button type="default" class="weui-btn weui-btn_default">教室类型: {{array[roomtype]}}</button>
+    </picker>
+</view>
+
+<view class="roomtype {{haveChosenRoomType?'chosenroomtype':''}}">
+
+    <view style="display:flexbox;height: 480px;width:100%;">
+        <block wx:for="{{arr}}" wx:key="key" wx:for-index="idx" wx:for-item="item">
+            <view style="display:flexbox;width:100%;height: {{480/arrSize[0] -2}}px;margin: 0;">
+                <block wx:for="{{item}}" wx:key="key" wx:for-index="idx2" wx:for-item="item">
+                    <view style="display:inline-flex;width:{{394/arrSize[1] -2}}px;height: 100%;">
+                        <image id="{{idx}},{{idx2}}" src="/image/{{ifShow[idx][idx2]?'已':'可'}}选座位.png" style="display:block;width: 60px;height: 60px;margin: auto auto;" catchtap="bindcatchtap">
+                        </image>
+                    </view>
+                </block>
+            </view>
+
+        </block>
+    </view>
+
+    <view style="display: block;height: 40px;width:100%;">
+        <image src="/image/讲台.png" style="display: block;width: 40px;height: 40px;margin:0 auto"></image>
+    </view>
+</view>
+
+<view style="position: fixed;bottom: 30px;display: flex;width: 100%;">
+    <navigator wx:if="{{!haveChosenRoomType}}" class="weui-btn weui-btn_primary" aria-role="button" url="javascript:" bindtap="finishChooseRoomType">确认</navigator>
+
+    <navigator wx:if="{{haveChosenRoomType && !haveStartedSigning}}" class="weui-btn weui-btn_primary" aria-role="button" url="javascript:" bindtap="startSigning">发起签到</navigator>
+
+    <navigator wx:if="{{haveStartedSigning && !haveStopedSigning}}" title="等待中" class="weui-btn weui-btn_warn weui-btn_loading" aria-role="button" url="javascript:" bindtap="stopSigning"><text class="weui-primary-loading"><text class="weui-primary-loading__dot"></text></text>停止签到</navigator>
+
+    <navigator wx:if="{{haveStopedSigning }}" class="weui-btn weui-btn_primary" aria-role="button" url="javascript:" bindtap="exit">退出签到</navigator>
+</view>
+
+
+<!-- 异常反馈提示框 -->
+<view aria-role="dialog" aria-modal="true" class="fadeIn {{!excepShow ? 'fadeOut' : ''}}" wx:if="{{excepShow}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__bd">签到完成，收到{{excepNum}}条异常反馈</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="closeDialog3">退出</view>
+        </view>
+    </view>
+</view>
+
+<!-- toast -->
+<view aria-role="alert" class="fadeIn {{!toastShow ? 'fadeOut' : ''}}" wx:if="{{toastShow}}">
+    <view class="weui-mask_transparent"></view>
+    <view class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <view class="weui-toast__content">{{toastInfo}}</view>
+    </view>
+</view>
+
+<!-- 确认发起签到示框 -->
+<view aria-role="dialog" aria-modal="true" class="fadeIn {{!dialogShow ? 'fadeOut' : ''}}" wx:if="{{dialogShow1}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__hd"><strong class="weui-dialog__title">发起签到</strong></view>
+        <view class="weui-dialog__bd">是否确定发起签到</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_default" bindtap="closeDialog">取消</view>
+            <view id="delete" aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="closeDialog1">确定</view>
+        </view>
+    </view>
+</view>
+
+<!-- 结束签到 -->
+<view aria-role="dialog" aria-modal="true" class="fadeIn {{!dialogShow ? 'fadeOut' : ''}}" wx:if="{{dialogShow2}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__hd"><strong class="weui-dialog__title">结束签到</strong></view>
+        <view class="weui-dialog__bd">是否确定结束签到</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_default" bindtap="closeDialog">取消</view>
+            <view id="delete" aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="closeDialog2">确定</view>
+        </view>
+    </view>
+</view>
+
+<view aria-role="dialog" aria-modal="true" class="fadeIn" wx:if="{{dialogShow4}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__bd">{{sign_info}}</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="close">退出</view>
+        </view>
+    </view>
+</view>

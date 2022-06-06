@@ -1,0 +1,62 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">补签申请处理</h2>
+</view>
+
+<block wx:for="{{complements}}"  wx:key="key" wx:for-index="idx" wx:for-item="complement">
+    <view class="weui-form-preview" style="margin-top: 5px;">
+        <view class="weui-form-preview__hd" aria-role="option">
+            <view class="weui-form-preview__item">
+                <label class="weui-form-preview__label">申请人</label>
+                <em class="weui-form-preview__value">{{complement.stu_name}}</em>
+            </view>
+        </view>
+        <view aria-labelledby="p1 js_a11y_comma p2 js_a11y_comma p3" class="weui-form-preview__bd" aria-role="option">
+            <view id="p1" class="weui-form-preview__item">
+                <label class="weui-form-preview__label">学号</label>
+                <text class="weui-form-preview__value">{{complement.stu_id}}</text>
+            </view>
+            <view id="p2" class="weui-form-preview__item">
+                <label class="weui-form-preview__label">课程</label>
+                <text class="weui-form-preview__value">{{complement.cou_name}} [{{complement.cou_id}}]</text>
+            </view>
+            <view  class="weui-form-preview__item">
+                <label class="weui-form-preview__label">补签节次</label>
+                <text class="weui-form-preview__value">{{complement.sgn_index}}</text>
+            </view>
+
+
+            <view id="p3" class="weui-form-preview__item">
+                <label class="weui-form-preview__label">补签理由</label>
+                <text class="weui-form-preview__value">{{complement.bsgn_reason}}</text>
+            </view>
+            <view  class="weui-form-preview__item">
+                <label class="weui-form-preview__label">申请时间</label>
+                <text class="weui-form-preview__value">{{complement.bsgn_time}}</text>
+            </view>
+        </view>
+        <view  class="weui-form-preview__ft">
+            <navigator id="r{{idx}}" class="weui-form-preview__btn weui-form-preview__btn_primary" aria-role="button" url="javascript:" bindtap="excute">拒绝</navigator>
+            <navigator id="t{{idx}}"  class="weui-form-preview__btn weui-form-preview__btn_primary" aria-role="button" url="javascript:" bindtap="excute">同意</navigator>
+        </view>
+    </view>
+</block>
+
+
+
+<view aria-role="alert" class="fadeIn {{false ? 'fadeOut' : ''}}" wx:if="{{toastShow}}">
+    <view class="weui-mask_transparent"></view>
+    <view class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <view class="weui-toast__content">已完成</view>
+    </view>
+</view>
+
+<view aria-role="dialog" aria-modal="true" class="fadeIn" wx:if="{{dialogShow}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__bd">共找到{{complement_num}}条补签申请</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="close">关闭</view>
+        </view>
+    </view>
+</view>

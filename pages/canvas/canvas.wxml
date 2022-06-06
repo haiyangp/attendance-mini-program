@@ -1,0 +1,6 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">可视化信息</h2>
+</view>
+<view class="container">
+    <canvas canvas-id="areaCanvas" class="canvas" bindtouchstart="touchHandler" ></canvas>
+</view>

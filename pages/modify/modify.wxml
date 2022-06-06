@@ -1,0 +1,12 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">修改人像</h2>
+</view>
+<view class="weui-form__tips-area" style="margin-top:100px ;">
+    <image src="{{img_src}}" style="width: 300px;height: 300px;" bindtap="chooseImageTap">拍照</image>
+    <view class="weui-form__tips">
+        点击图片上传正脸人像
+    </view>
+</view>
+<view >
+    <navigator class="weui-btn weui-btn_primary " id="showTooltips" aria-role="button" url="javascript:">确定</navigator>
+</view>

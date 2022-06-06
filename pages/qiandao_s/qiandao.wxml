@@ -1,0 +1,98 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">{{course.cou_name}} 签到</h2>
+</view>
+
+
+
+<view class="roomtype chosenroomtype">
+    <view style="display: block;height: 40px;width:100%;">
+        <image src="/image/讲台.png" style="display: block;width: 40px;height: 40px;margin:0 auto"></image>
+    </view>
+    <view style="display:flexbox;height: 480px;width:100%;">
+        <block wx:for="{{arr}}" wx:key="key" wx:for-index="idx" wx:for-item="item">
+            <view style="display:flexbox;width:100%;height: {{480/arrSize[0] -2}}px;margin: 0;">
+                <block wx:for="{{item}}" wx:key="key" wx:for-index="idx2" wx:for-item="item">
+                    <view style="display:inline-flex;width:{{394/arrSize[1] -2}}px;height: 100%;">
+                        <image id="{{idx}},{{idx2}}" catchtap="bindcatchtap" src="/image/{{(idx==seat[0] && idx2==seat[1])?'已':'可'}}选座位.png" style="display:block;width: 60px;height: 60px;margin: auto auto;">
+                        </image>
+                    </view>
+                </block>
+            </view>
+        </block>
+    </view>
+</view>
+
+<view style="position: fixed;bottom: 30px;display: flex;width: 100%;">
+
+    <navigator wx:if="{{!haveTakenPhoto}}" class="weui-btn weui-btn_primary" aria-role="button" url="javascript:" bindtap="takePhoto">拍摄人像</navigator>
+
+    <navigator wx:if="{{!haveChosenSeat && haveTakenPhoto}}" disabled aria-disabled="{{!usableBtn}}" class="weui-btn weui-btn_primary {{!usableBtn?'weui-btn_disabled':''}}" aria-role="button" url="javascript:" bindtap="sendSigning">提交签到</navigator>
+
+
+    <!-- 
+    <navigator wx:if="{{haveStartedSigning && !haveStopedSigning}}" title="等待中" class="weui-btn weui-btn_warn weui-btn_loading" aria-role="button" url="javascript:" bindtap="stopSigning"><text class="weui-primary-loading"><text class="weui-primary-loading__dot"></text></text>停止签到</navigator>
+
+    <navigator wx:if="{{haveStopedSigning }}" class="weui-btn weui-btn_primary" aria-role="button" url="javascript:" bindtap="exit">退出签到</navigator> -->
+</view>
+
+
+<view aria-role="dialog" aria-modal="true" class="fadeIn" wx:if="{{dialogShow1}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__bd">{{dialogInfo1}}</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="closeDialog1">退出</view>
+        </view>
+    </view>
+</view>
+
+<view aria-role="alert" class="fadeIn {{false ? 'fadeOut' : ''}}" wx:if="{{toastShow}}">
+    <view class="weui-mask_transparent"></view>
+    <view class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <view class="weui-toast__content">{{toastInfo}}</view>
+    </view>
+</view>
+
+
+<view aria-role="dialog" aria-modal="true" class="fadeIn {{!dialogShow2 ? 'fadeOut' : ''}}" wx:if="{{dialogShow2}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__hd"><strong class="weui-dialog__title">{{dialogInfo2}}</strong></view>
+        <view class="weui-dialog__bd">是否发送异常反馈</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_default" bindtap="closeDialog2">取消</view>
+            <view id="delete" aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="closeDialog3">确定</view>
+        </view>
+    </view>
+</view>
+
+
+
+<view class="weui-half-screen-dialog weui-half-screen-dialog_bottom-fixed" wx:if="{{dialogShow3}}">
+    <view class="weui-half-screen-dialog__hd">
+        <view class="weui-half-screen-dialog__hd__side" bindtap="close">
+        </view>
+        <view class="weui-half-screen-dialog__hd__main">
+            <strong class="weui-half-screen-dialog__title" id="js_dialog2_title">异常反馈</strong>
+        </view>
+    </view>
+    <view class="weui-half-screen-dialog__bd">
+        <view class="weui-bottom-fixed-opr-page  ">
+            <view class="weui-cells__group weui-cells__group_form">
+                <view class="weui-cells__title"></view>
+                <view class="weui-cells weui-cells_form">
+                    <view class="weui-cell" hover-class="weui-cell_active">
+                        <view class="weui-cell__bd">
+                            <textarea class="weui-textarea" placeholder="可简要描述异常情况" placeholder-class="weui-input__placeholder" rows="3" bindinput="excepInput"></textarea>
+                            <view aria-role="option" class="weui-textarea-counter"><span>{{textNum}}</span>/200</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-bottom-fixed-opr">
+                <view id="js_btn1_2" aria-role="button" class="weui-btn weui-btn_primary" bindtap="sendExcept">发送</view>
+            </view>
+        </view>
+    </view>
+</view>

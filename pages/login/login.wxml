@@ -1,0 +1,36 @@
+<view class="container">
+
+    <view class="page-body">
+        <image style="width: 180px;height: 180px;margin-top: 40%;" src="/image/logo3.png" />
+        <text decode="{{true}}" class="page-body-title"> 人脸识别考勤小程序</text>
+        <view class="page-body-wrapper">
+            <block wx:if="{{hasUserProInfo === true}}">
+                <button class="page-body-button " type="primary" bindtap="login" style="font-weight: 1000;">一键微信登录
+                </button>
+                <switch checked="{{false}}" bindchange="switch1Change" style="margin-top: 80px;">我是老师</switch>
+            </block>
+
+            <block wx:else>
+                <button class="page-body-button" type="default" bindtap="getUserProfile" style="font-weight: 1000;border: 3px black solid;">点击授权
+                </button>
+            </block>
+
+        </view>
+
+    </view>
+
+</view>
+
+<view aria-role="alert" class="fadeIn {{hideLoading ? 'fadeOut' : ''}}" wx:if="{{loading}}">
+    <view class="weui-mask_transparent" />
+    <view class="weui-toast">
+        <view class="weui-primary-loading weui-primary-loading_transparent weui-icon_toast">
+            <view class="weui-primary-loading__dot" />
+        </view>
+        <view class="weui-toast__content">{{loadingInfo}}</view>
+    </view>
+</view>
+
+<mp-toptips msg="{{tipMsg}}" type="{{tipType}}" show="{{tipShow}}" />
+
+<mask hidden="{{maskHidden}}" bindtap="mask1" hover-style="none" />

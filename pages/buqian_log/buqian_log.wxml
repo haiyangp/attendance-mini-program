@@ -1,0 +1,62 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">数据结构 补签记录</h2>
+</view>
+<view>
+    <block wx:for="{{complements}}" wx:key="key" wx:for-index="idx" wx:for-item="complement">
+        <view class="weui-form-preview" style="margin-top: 5px;">
+            <view class="weui-form-preview__hd" aria-role="option">
+                <label class="weui-form-preview__label">申请人</label>
+                <em class="weui-form-preview__value">{{complement.stu_name}}</em>
+            </view>
+            <view aria-labelledby="p4 js_a11y_comma p5 js_a11y_comma p6" class="weui-form-preview__bd" aria-role="option">
+                <view class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">签到节次</label>
+                    <text class="weui-form-preview__value">{{complement.sgn_index}}</text>
+                </view>
+                <view class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">学号</label>
+                    <text class="weui-form-preview__value">{{complement.stu_id}}</text>
+                </view>
+                <view class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">申请时间</label>
+                    <text class="weui-form-preview__value">{{complement.bsgn_time}}</text>
+                </view>
+                <view class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">补签理由</label>
+                    <text class="weui-form-preview__value">{{complement.bsgn_reason}}</text>
+                </view>
+
+                <view class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">补签状态</label>
+                    <text wx:if="{{complement.bsgn_state==0}}" class="weui-form-preview__value" style="color: #07C160;">已同意</text>
+                    <text wx:if="{{complement.bsgn_state==2}}" class="weui-form-preview__value" style="color: #DC143C;">已驳回</text>
+                    <text wx:if="{{complement.bsgn_state==1}}" class="weui-form-preview__value" style="color: #DC143C;">待处理</text>
+                </view>
+
+
+
+            </view>
+
+
+        </view>
+    </block>
+</view>
+
+
+<view aria-role="alert" class="fadeIn {{false ? 'fadeOut' : ''}}" wx:if="{{show}}">
+    <view class="weui-mask_transparent"></view>
+    <view class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <view class="weui-toast__content">发起签到成功</view>
+    </view>
+</view>
+
+<view aria-role="dialog" aria-modal="true" class="fadeIn" wx:if="{{dialogShow}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__bd">共找到{{complement_num}}条补签记录</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="close">关闭</view>
+        </view>
+    </view>
+</view>

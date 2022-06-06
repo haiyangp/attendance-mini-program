@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "mp-dialog": "/miniprogram_npm/weui-miniprogram/dialog/dialog",
+        "mp-toptips": "/miniprogram_npm/weui-miniprogram/toptips/toptips",
+        "mp-half-screen-dialog": "/miniprogram_npm/weui-miniprogram/half-screen-dialog/half-screen-dialog"
+
+      }
+}

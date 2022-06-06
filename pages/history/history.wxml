@@ -1,0 +1,8 @@
+<view class="index">
+    <view class="weui-form__text-area header">
+        <h2 class="weui-form__title">历史信息</h2>
+    </view>
+    <view style="display: flex;">
+        <image src="/image/图片3.png" style="display: block; width:400px;height:263px;margin:100px auto;"></image>
+    </view>
+</view>

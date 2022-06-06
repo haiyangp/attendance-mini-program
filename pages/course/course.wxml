@@ -1,0 +1,137 @@
+<view class="weui-form__text-area header">
+    <h2 class="weui-form__title">课程列表</h2>
+</view>
+
+<view style="border:5px radius red;">
+
+    <block wx:for="{{courses}}" wx:key="key" wx:for-index="idx" wx:for-item="course">
+        <view class="ticket-container" style="width: 95%;margin:0 auto;margin-top:10px; border:2px #2c2c2c solid">
+            <view class="ticket-container-top">
+                <view class="ticket-left">
+
+                    <view class="name">{{course.cou_name}}</view>
+                    <view class="desc">{{course.cou_id}}</view>
+                </view>
+                <view id="index{{idx}}" class="ticket-right" catchtap="index">
+                    <l-badge dot="{{true}}" show="{{course.cou_detail.signing?true:false}}">
+                        <image style="width: 15px;height: 15px;" src="/image/arrowright.png" />
+                    </l-badge>
+
+                </view>
+            </view>
+            <view class="ticket-container-bottom">
+                <l-collapse>
+                    <l-collapse-item l-body-class="l-body-class" l-title-class="l-title-class" customTitle="{{true}}">
+                        <view class="title" slot="title">
+                            <view class="ticket-detail-container">课程详情
+
+                                <l-icon name="down" size="16" color="#999" />
+                            </view>
+                            <view id="cou_{{idx}}" style="font-size: 13px;" class="weui-btn_mini weui-btn_warn weui-wa-hotarea" catchtap="deleteCourse">{{ifTeacher?'删除':'退出'}}课程</view>
+                        </view>
+                        <text decode="{{true}}">教师: {{course.cou_detail.teacherName}}；&nbsp;&nbsp;&nbsp;&nbsp;班级人数: {{course.cou_detail.studentsNumber}}；\n已签到{{course.cou_detail.signTimes}}次\n</text>
+                    </l-collapse-item>
+                </l-collapse>
+            </view>
+        </view>
+    </block>
+
+    <view class="ticket-container" style="width: 95%;height:110px;margin:0 auto;margin-top:10px; border:2px #2c2c2c solid">
+
+        <view style="margin: auto auto;display: flex;color:#C7C7C9;" bindtap="addCourse">
+            <image src="/image/plus.png" style="width: 60px;height: 60px;"></image>
+            <text style="height:60px;line-height: 60px;font-size:28px">{{ifTeacher?'创建':'加入'}}课程</text>
+        </view>
+    </view>
+</view>
+
+<!-- 删除退出提示框 -->
+<view aria-role="dialog" aria-modal="true" class="fadeIn {{!dialogShow ? 'fadeOut' : ''}}" wx:if="{{dialogShow}}">
+    <view class="weui-mask"></view>
+    <view class="weui-dialog">
+        <view class="weui-dialog__hd"><strong class="weui-dialog__title">{{ifTeacher?'删除':'退出'}}课程</strong></view>
+        <view class="weui-dialog__bd">是否确定{{ifTeacher?'删除':'退出'}} {{cou_target}}</view>
+        <view class="weui-dialog__ft">
+            <view aria-role="button" class="weui-dialog__btn weui-dialog__btn_default" bindtap="closeDialog">取消</view>
+            <view id="delete" aria-role="button" class="weui-dialog__btn weui-dialog__btn_primary" bindtap="closeDialog">确定</view>
+        </view>
+    </view>
+</view>
+
+<!-- 填写课程信息 -->
+<block wx:if="{{!ifTeacher}}">
+    <mp-half-screen-dialog bindbuttontap="buttontap" show="{{addCourseDialogShow}}" maskClosable="{{true}}">
+        <view slot="desc">
+            <text style="font-size: 22px;">课程信息</text>
+
+            <view class="weui-cells__group weui-cells__group_form weui-cells__group_form-primary" style="margin-top: 30px;">
+                <!-- <view class="weui-cells__title">课程信息</view> -->
+                <view class="weui-cells">
+                    <view class="weui-cell weui-cell_active">
+                        <view class="weui-cell__hd"><label class="weui-label">课程号</label></view>
+                        <view class="weui-cell__bd">
+                            <input type="text" bindinput="formInputChange_id" data-field="mobile" class="weui-input" placeholder="请输入课程号" placeholder-class="weui-input__placeholder" />
+
+
+                        </view>
+                    </view>
+
+
+                </view>
+            </view>
+
+        </view>
+
+        <view slot="footer">
+            <button type="primary" bindtap="closeHalfScreenDialog">加入</button>
+        </view>
+    </mp-half-screen-dialog>
+</block>
+<block wx:else>
+    <mp-half-screen-dialog bindbuttontap="buttontap" show="{{addCourseDialogShow}}" maskClosable="{{true}}">
+
+
+        <view slot="desc">
+            <text style="font-size: 22px;">课程信息</text>
+
+            <view class="weui-cells__group weui-cells__group_form weui-cells__group_form-primary" style="margin-top: 30px;">
+                <!-- <view class="weui-cells__title">课程信息</view> -->
+                <view class="weui-cells">
+                    <view class="weui-cell weui-cell_active">
+                        <view class="weui-cell__hd"><label class="weui-label">课程号</label></view>
+                        <view class="weui-cell__bd">
+                            <input type="text" bindinput="formInputChange_id" data-field="mobile" class="weui-input" placeholder="请输入课程号" placeholder-class="weui-input__placeholder" />
+                            <!-- <input class="weui-input" placeholder="填写本人微信号" placeholder-class="weui-input__placeholder" /> -->
+
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_active">
+                        <view class="weui-cell__hd"><label class="weui-label">课程名字</label></view>
+                        <view class="weui-cell__bd">
+                            <input type="text" bindinput="formInputChange_name" data-field="mobile" class="weui-input" placeholder="请输入课程名" placeholder-class="weui-input__placeholder" />
+                            <!-- <input class="weui-input" placeholder="填写本人微信号" placeholder-class="weui-input__placeholder" /> -->
+
+                        </view>
+                    </view>
+
+                </view>
+            </view>
+
+        </view>
+
+        <view slot="footer">
+            <button type="primary" bindtap="closeHalfScreenDialog">创建</button>
+        </view>
+    </mp-half-screen-dialog>
+</block>
+
+<!-- toast信息 -->
+<view aria-role="alert" class="fadeIn {{!toastShow ? 'fadeOut' : ''}}" wx:if="{{toastShow}}">
+    <view class="weui-mask_transparent"></view>
+    <view class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <view class="weui-toast__content">{{toastInfo}}</view>
+    </view>
+</view>
+
+<mp-toptips msg="{{tipMsg}}" type="{{tipType}}" show="{{tipShow}}"></mp-toptips>

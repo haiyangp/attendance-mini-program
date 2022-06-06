@@ -1,0 +1,89 @@
+<view class="index">
+    <view class="weui-form__text-area header">
+        <view class="user_bg">
+            <view wx:if="{{userinfo.avatarUrl}}" class="user_on">
+                <view class="user_img">
+                    <image src="{{userinfo.avatarUrl}}"></image>
+                </view>
+                <view class="user_info">
+                    <text>{{userinfo.nickName}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+
+
+    <view class="page__bd">
+
+        <view class="weui-cells__title" style="margin-top: 40px;">个人信息</view>
+
+        <view class="weui-cells weui-cells_after-title">
+
+            <view class="weui-cell">
+
+                <view class="weui-cell__bd">姓名</view>
+
+                <view class="weui-cell__ft">{{name}}</view>
+
+            </view>
+            <view class="weui-cell">
+
+                <view class="weui-cell__bd">学号/工号</view>
+
+                <view class="weui-cell__ft">{{id}}</view>
+
+            </view>
+
+        </view>
+
+        <block wx:if="{{ifTeacher}}">
+            <view class="weui-cells__title">未读信息</view>
+            <view class="weui-cells weui-cells_after-title">
+                <navigator aria-labelledby="js_cell_l1_bd" url="/pages/exception/exception" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd" id="js_cell_l1_bd" aria-hidden="true">
+                        <view>待处理异常反馈</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access" aria-hidden="true"></view>
+                </navigator>
+                <navigator url="/pages/buqian_request_t/buqian_request" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">
+                        <view>待处理补签申请</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </view>
+        </block>
+        <block wx:else="">
+            <view class="weui-cells__title">签到信息</view>
+            <view class="weui-cells weui-cells_after-title">
+                <navigator aria-labelledby="js_cell_l1_bd" url="/pages/qiandao_log_ss/qiandao_log" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd" id="js_cell_l1_bd" aria-hidden="true">
+                        <view>签到记录</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access" aria-hidden="true"></view>
+                </navigator>
+                <navigator url="/pages/buqian_log_ss/buqian_log" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd">
+                        <view>补签记录</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </view>
+        </block>
+
+        <block wx:if="{{!ifTeacher}}">
+            <view class="weui-cells__title">人脸信息</view>
+            <view class="weui-cells weui-cells_after-title">
+                <navigator aria-labelledby="js_cell_l1_bd" url="/pages/modify/modify" class="weui-cell weui-cell_access" bindtap="modify" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd" id="js_cell_l1_bd" aria-hidden="true">
+                        <view>重新上传</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access" aria-hidden="true"></view>
+                </navigator>
+            </view>
+
+        </block>
+
+
+    </view>
+</view>
